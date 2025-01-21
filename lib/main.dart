@@ -1,5 +1,6 @@
 import 'package:catfish_mobile/features/onboarding/screens/index.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +17,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         scaffoldBackgroundColor: Colors.transparent,
         useMaterial3: true,
+        textTheme: GoogleFonts.aBeeZeeTextTheme(
+          Theme.of(context).textTheme,
+        ),
       ),
       home: const MyHomePage(),
     );
