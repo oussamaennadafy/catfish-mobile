@@ -26,7 +26,7 @@ class ContentCard extends StatelessWidget {
             ),
             child: Image.asset(
               item.imageSource,
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
             ),
           ),
           SizedBox(height: 28),

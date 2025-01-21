@@ -39,7 +39,10 @@ class _OnBoardingStateScreen extends State<OnBoardingScreen> with SingleTickerPr
     setState(() {
       _selectedDot++;
     });
-    contentAnimationController.animateTo(_selectedDot.toDouble());
+    contentAnimationController.animateTo(
+      _selectedDot.toDouble(),
+      curve: Curves.easeInOut,
+    );
   }
 
   void handleSkipPress() {
