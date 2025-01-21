@@ -1,3 +1,4 @@
+import 'package:catfish_mobile/features/onboarding/screens/index.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        scaffoldBackgroundColor: Color(0xFF241366),
+        scaffoldBackgroundColor: Colors.transparent,
         useMaterial3: true,
       ),
       home: const MyHomePage(),
@@ -31,15 +32,20 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          "video call",
-          style: TextStyle(
-            color: Colors.white,
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/images/mobile-background.png",
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.cover,
+        ),
+        Scaffold(
+          body: SafeArea(
+            child: OnBoardingScreen(),
           ),
         ),
-      ),
+      ],
     );
   }
 }
