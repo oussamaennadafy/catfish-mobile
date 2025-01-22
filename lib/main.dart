@@ -1,6 +1,31 @@
 import 'package:catfish_mobile/features/onboarding/screens/index.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+// GoRouter configuration
+final _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => Stack(
+        children: [
+          Image.asset(
+            "assets/images/mobile-background.png",
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
+          ),
+          SafeArea(
+            child: Scaffold(
+              body: OnBoardingScreen(),
+            ),
+          ),
+        ],
+      ),
+    ),
+  ],
+);
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +36,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -21,35 +46,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Image.asset(
-          "assets/images/mobile-background.png",
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.cover,
-        ),
-        Scaffold(
-          body: SafeArea(
-            child: OnBoardingScreen(),
-          ),
-        ),
-      ],
+      routerConfig: _router,
     );
   }
 }
