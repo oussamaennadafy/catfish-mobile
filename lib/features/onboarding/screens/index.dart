@@ -3,18 +3,21 @@ import 'package:catfish_mobile/features/onboarding/widgets/animated_dots.dart';
 import 'package:catfish_mobile/features/onboarding/widgets/content_card.dart';
 import 'package:catfish_mobile/shared/widgets/buttons/primary_button.dart';
 import 'package:catfish_mobile/shared/widgets/buttons/secondary_button.dart';
+import 'package:catfish_mobile/stores/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class OnBoardingScreen extends StatefulWidget {
+class OnBoardingScreen extends ConsumerStatefulWidget {
   const OnBoardingScreen({
     super.key,
   });
 
   @override
-  State<OnBoardingScreen> createState() => _OnBoardingStateScreen();
+  ConsumerState<OnBoardingScreen> createState() => _OnBoardingStateScreen();
 }
 
-class _OnBoardingStateScreen extends State<OnBoardingScreen> with SingleTickerProviderStateMixin {
+class _OnBoardingStateScreen extends ConsumerState<OnBoardingScreen> with SingleTickerProviderStateMixin {
   int _selectedDot = 0;
   late AnimationController contentAnimationController;
 
@@ -32,8 +35,8 @@ class _OnBoardingStateScreen extends State<OnBoardingScreen> with SingleTickerPr
 
   void handleNextPress() {
     if (_selectedDot >= onboardingContentList.length - 1) {
-      print("navigate");
-      // handle navigation
+      ref.read(userProvider.notifier).setFirstTimeOpen(false);
+      context.go("/callHub");
       return;
     }
     setState(() {
@@ -60,7 +63,8 @@ class _OnBoardingStateScreen extends State<OnBoardingScreen> with SingleTickerPr
       child: Column(
         spacing: 24.0,
         children: [
-          SizedBox(height: 36),
+          // SizedBox(height: 36),
+          Spacer(),
           Center(
             child: Text(
               "Get Started",
@@ -97,7 +101,9 @@ class _OnBoardingStateScreen extends State<OnBoardingScreen> with SingleTickerPr
             numOfDots: onboardingContentList.length,
             selectedDot: _selectedDot,
           ),
-          Spacer(),
+          Spacer(
+            flex: 2,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

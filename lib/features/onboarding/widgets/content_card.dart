@@ -15,18 +15,22 @@ class ContentCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width - 18 * 2,
       child: Column(
         children: [
-          Container(
-            height: 250,
-            width: double.infinity,
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(24.0),
-              ),
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: 500,
             ),
-            child: Image.asset(
-              item.imageSource,
-              fit: BoxFit.contain,
+            child: Container(
+              width: double.infinity,
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(24.0),
+                ),
+              ),
+              child: Image.asset(
+                item.imageSource,
+                fit: BoxFit.contain,
+              ),
             ),
           ),
           SizedBox(height: 28),
