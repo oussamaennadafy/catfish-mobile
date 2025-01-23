@@ -1,27 +1,22 @@
 import 'package:catfish_mobile/features/callHub/screens/call_hub.dart';
 import 'package:catfish_mobile/features/onboarding/screens/index.dart';
 import 'package:catfish_mobile/routes/constants/app_screens.dart';
-import 'package:catfish_mobile/stores/providers/user_provider.dart';
+import 'package:catfish_mobile/routes/layouts/app_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(
-    ProviderScope(
-      child: MyApp(),
-    ),
+    MyApp(),
   );
 }
 
-class MyApp extends ConsumerWidget {
-  MyApp({super.key});
-
-  final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'shell');
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context, ref) {
+  Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -33,36 +28,27 @@ class MyApp extends ConsumerWidget {
         ),
       ),
       routerConfig: GoRouter(
-        initialLocation: ref.read(userProvider).firstTimeOpen ? AppScreens.onBoarding : AppScreens.callHub,
+        initialLocation: AppScreens.onBoarding,
         routes: [
           ShellRoute(
-            navigatorKey: _shellNavigatorKey,
-            builder: (BuildContext context, GoRouterState state, Widget child) => Stack(
-              children: [
-                Image.asset(
-                  "assets/images/mobile-background.png",
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.cover,
-                ),
-                SafeArea(
-                  child: Scaffold(
-                    body: ref.read(userProvider).firstTimeOpen ? OnBoardingScreen() : CallHub(),
-                  ),
-                ),
-              ],
+            builder: (BuildContext context, GoRouterState state, Widget child) => AppLayout(
+              child: child,
             ),
             routes: [
               GoRoute(
                 path: AppScreens.onBoarding,
-                builder: (context, state) {
-                  return OnBoardingScreen();
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    child: OnBoardingScreen(),
+                  );
                 },
               ),
               GoRoute(
                 path: AppScreens.callHub,
-                builder: (context, state) {
-                  return CallHub();
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    child: CallHub(),
+                  );
                 },
               ),
             ],
