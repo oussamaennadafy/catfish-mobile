@@ -6,11 +6,13 @@ class PrimaryButton extends StatelessWidget {
     required this.text,
     this.icon,
     this.onPress,
+    this.height,
   });
 
   final String text;
   final IconData? icon;
   final void Function()? onPress;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +21,12 @@ class PrimaryButton extends StatelessWidget {
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10.0),
-        width: 115,
+        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+        height: height ?? 45,
         decoration: BoxDecoration(
           gradient: RadialGradient(
             center: Alignment(-0.3, -1),
             radius: 1,
-            stops: [
-              0,
-              1
-            ],
             colors: [
               Color.fromARGB(255, 120, 111, 239),
               Color(0xFF4139B0),
@@ -39,9 +37,10 @@ class PrimaryButton extends StatelessWidget {
           ),
         ),
         child: Row(
+          spacing: 4.0,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (icon != null) SizedBox(width: 12),
+            // if (icon != null) SizedBox(width: 12),
             Text(
               text,
               overflow: TextOverflow.ellipsis,
