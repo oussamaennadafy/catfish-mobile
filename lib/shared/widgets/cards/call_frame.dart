@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:catfish_mobile/shared/widgets/avatars/name_avatar.dart';
+import 'package:catfish_mobile/shared/widgets/shadows/illustration_shadow.dart';
 import 'package:catfish_mobile/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,13 @@ class CallFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final showCameraPreview = cameraController != null && cameraController!.value.isInitialized && cameraOpen == true;
-    Widget? content = NameAvatar();
+    Widget? content = Stack(
+      alignment: Alignment.center,
+      children: [
+        IllustrationShadow(alpha: 0.2),
+        NameAvatar(),
+      ],
+    );
     if (loading == true) {
       content = Center(child: CircularProgressIndicator());
     } else if (cameraController != null && cameraOpen == true) {

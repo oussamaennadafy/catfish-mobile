@@ -7,9 +7,15 @@ class ActionsBar extends StatelessWidget {
   const ActionsBar({
     super.key,
     required this.handleCameraToggle,
+    required this.cameraBottonActive,
+    required this.handleMicToggle,
+    required this.micBottonActive,
   });
 
+  final bool cameraBottonActive;
+  final bool micBottonActive;
   final void Function() handleCameraToggle;
+  final void Function() handleMicToggle;
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +35,21 @@ class ActionsBar extends StatelessWidget {
             ),
             AppIconButton(
               icon: Icons.people,
-              backgroundColor: AppColors.surface,
+              backgroundColor: AppColors.surfaceVarient,
             ),
             AppIconButton(
               icon: Icons.mic_off_outlined,
-              backgroundColor: AppColors.surface,
+              backgroundColor: AppColors.surfaceVarient,
+              onPress: handleMicToggle,
+              active: micBottonActive,
+              activeBackgroundColor: AppColors.lightSurface,
             ),
             AppIconButton(
               icon: Icons.videocam_off_sharp,
-              backgroundColor: AppColors.surface,
+              backgroundColor: AppColors.surfaceVarient,
+              activeBackgroundColor: AppColors.lightSurface,
               onPress: handleCameraToggle,
+              active: cameraBottonActive,
             ),
           ],
         ),

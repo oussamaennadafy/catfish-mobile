@@ -8,10 +8,14 @@ class AppIconButton extends StatelessWidget {
     this.backgroundColor,
     this.borderColor,
     this.onPress,
+    this.activeBackgroundColor,
+    this.active = false,
   });
 
+  final bool? active;
   final IconData icon;
   final Color? backgroundColor;
+  final Color? activeBackgroundColor;
   final Color? borderColor;
   final void Function()? onPress;
 
@@ -22,7 +26,7 @@ class AppIconButton extends StatelessWidget {
       width: 45,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: active == true ? activeBackgroundColor : backgroundColor,
         border: Border.all(
           color: borderColor ?? AppColors.borderGrey,
           width: 1,

@@ -15,10 +15,11 @@ class CallHub extends StatefulWidget {
   State<CallHub> createState() => _CallHubState();
 }
 
-class _CallHubState extends State<CallHub> {
+class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
   CameraController? controller;
   bool camerPreviewLoader = false;
   bool cameraOpen = true;
+  bool micOpen = true;
   String? error;
 
   Future<void> _initializeCameraController() async {
@@ -42,14 +43,15 @@ class _CallHubState extends State<CallHub> {
       print(e);
       if (e is CameraException && e.code == "CameraAccessDenied") {
         ErrorHandlerService.handleError(
-            context,
-            CameraErrors.cameraAccessDenied,
-            PrimaryButton(
-              text: "go to setting",
-              onPress: () async {
-                await openAppSettings();
-              },
-            ));
+          context,
+          CameraErrors.cameraAccessDenied,
+          PrimaryButton(
+            text: "go to setting",
+            onPress: () async {
+              await openAppSettings();
+            },
+          ),
+        );
         return;
       }
       ErrorHandlerService.handleError(context, e);
@@ -63,8 +65,8 @@ class _CallHubState extends State<CallHub> {
   @override
   void initState() {
     super.initState();
-
-    // _initializeCameraController();
+    _initializeCameraController();
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -98,6 +100,18 @@ class _CallHubState extends State<CallHub> {
     }
   }
 
+  void handleMicToggle() async {
+    setState(() {
+      micOpen = !micOpen;
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,6 +130,9 @@ class _CallHubState extends State<CallHub> {
             SizedBox(height: 16.0),
             ActionsBar(
               handleCameraToggle: handleCameraToggle,
+              handleMicToggle: handleMicToggle,
+              cameraBottonActive: !(controller != null && controller!.value.isInitialized && cameraOpen),
+              micBottonActive: !micOpen,
             ),
             SizedBox(height: 10.0),
           ],

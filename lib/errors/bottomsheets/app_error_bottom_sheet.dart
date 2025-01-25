@@ -1,4 +1,5 @@
 import 'package:catfish_mobile/shared/widgets/buttons/primary_button.dart';
+import 'package:catfish_mobile/shared/widgets/shadows/illustration_shadow.dart';
 import 'package:catfish_mobile/theme/app_illustrations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -44,23 +45,7 @@ class AppErrorBottomSheet extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Stack(
             children: [
-              Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.white.withValues(alpha: 0.1),
-                      blurRadius: 80,
-                    )
-                  ],
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      9999,
-                    ),
-                  ),
-                ),
-              ),
+              IllustrationShadow(),
               SvgPicture.asset(
                 AppIllustrations.errorIllustration,
                 // height: 100,
