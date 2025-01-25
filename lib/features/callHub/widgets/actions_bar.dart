@@ -1,5 +1,8 @@
+import 'package:catfish_mobile/features/callHub/enums/room_types.dart';
+import 'package:catfish_mobile/features/callHub/models/room_type_button.dart';
 import 'package:catfish_mobile/shared/widgets/buttons/icon_button.dart';
 import 'package:catfish_mobile/shared/widgets/buttons/primary_button.dart';
+import 'package:catfish_mobile/shared/widgets/dropdowns/icon_botton_dropdown.dart';
 import 'package:catfish_mobile/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +13,18 @@ class ActionsBar extends StatelessWidget {
     required this.cameraBottonActive,
     required this.handleMicToggle,
     required this.micBottonActive,
+    required this.handleLeaveHub,
+    required this.roomTypeButtons,
+    required this.selectedRoomType,
   });
 
   final bool cameraBottonActive;
   final bool micBottonActive;
   final void Function() handleCameraToggle;
   final void Function() handleMicToggle;
+  final void Function() handleLeaveHub;
+  final List<RoomTypeButton> roomTypeButtons;
+  final RoomType selectedRoomType;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +40,12 @@ class ActionsBar extends StatelessWidget {
                 icon: Icons.logout,
                 backgroundColor: Colors.red.withValues(alpha: 0.8),
                 borderColor: Colors.red.withValues(alpha: 0.8),
+                onPress: handleLeaveHub,
               ),
             ),
-            AppIconButton(
-              icon: Icons.people,
-              backgroundColor: AppColors.surfaceVarient,
+            IconBottonDropdown(
+              buttonsList: roomTypeButtons,
+              selectedButton: selectedRoomType,
             ),
             AppIconButton(
               icon: Icons.mic_off_outlined,

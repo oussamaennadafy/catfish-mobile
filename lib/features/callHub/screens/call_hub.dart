@@ -1,11 +1,16 @@
 import 'package:camera/camera.dart';
 import 'package:catfish_mobile/errors/camera_errors.dart';
 import 'package:catfish_mobile/errors/services/error_handler_service.dart';
+import 'package:catfish_mobile/features/callHub/enums/room_types.dart';
+import 'package:catfish_mobile/features/callHub/models/room_type_button.dart';
 import 'package:catfish_mobile/features/callHub/widgets/actions_bar.dart';
 import 'package:catfish_mobile/features/callHub/widgets/header/index.dart';
+import 'package:catfish_mobile/routes/constants/app_screens.dart';
+import 'package:catfish_mobile/shared/widgets/buttons/icon_button.dart';
 import 'package:catfish_mobile/shared/widgets/buttons/primary_button.dart';
 import 'package:catfish_mobile/shared/widgets/cards/call_frame.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class CallHub extends StatefulWidget {
@@ -18,13 +23,15 @@ class CallHub extends StatefulWidget {
 class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
   CameraController? controller;
   bool camerPreviewLoader = false;
-  bool cameraOpen = true;
-  bool micOpen = true;
+  bool cameraOpen = false;
+  bool micOpen = false;
+  RoomType seletedRoomType = RoomType.twoPeople;
   String? error;
 
   Future<void> _initializeCameraController() async {
     setState(() {
       camerPreviewLoader = true;
+      cameraOpen = false;
     });
     try {
       final camerasList = await availableCameras();
@@ -40,7 +47,6 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
       await controller!.initialize();
     } catch (e) {
       if (!mounted) return;
-      print(e);
       if (e is CameraException && e.code == "CameraAccessDenied") {
         ErrorHandlerService.handleError(
           context,
@@ -58,6 +64,7 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
     } finally {
       setState(() {
         camerPreviewLoader = false;
+        cameraOpen = true;
       });
     }
   }
@@ -65,7 +72,7 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    _initializeCameraController();
+    // _initializeCameraController();
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -81,7 +88,7 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
     if (state == AppLifecycleState.inactive) {
       cameraController.dispose();
     } else if (state == AppLifecycleState.resumed) {
-      _initializeCameraController();
+      if (cameraOpen) _initializeCameraController();
     }
   }
 
@@ -94,9 +101,18 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
     if (!controller!.value.isInitialized) {
       _initializeCameraController();
     } else {
-      setState(() {
-        cameraOpen = !cameraOpen;
-      });
+      if (controller == null) return;
+      if (cameraOpen) {
+        await controller!.dispose();
+        setState(() {
+          cameraOpen = false;
+        });
+      } else {
+        await _initializeCameraController();
+        setState(() {
+          cameraOpen = true;
+        });
+      }
     }
   }
 
@@ -105,6 +121,27 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
       micOpen = !micOpen;
     });
   }
+
+  final List<RoomTypeButton> roomTypeButtons = [
+    RoomTypeButton(
+      roomType: RoomType.twoPeople,
+      typeButton: AppIconButton(
+        icon: Icons.person,
+      ),
+    ),
+    RoomTypeButton(
+      roomType: RoomType.threePeople,
+      typeButton: AppIconButton(
+        icon: Icons.group,
+      ),
+    ),
+    RoomTypeButton(
+      roomType: RoomType.fourPeople,
+      typeButton: AppIconButton(
+        icon: Icons.groups,
+      ),
+    ),
+  ];
 
   @override
   void dispose() {
@@ -133,6 +170,11 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
               handleMicToggle: handleMicToggle,
               cameraBottonActive: !(controller != null && controller!.value.isInitialized && cameraOpen),
               micBottonActive: !micOpen,
+              roomTypeButtons: roomTypeButtons,
+              selectedRoomType: seletedRoomType,
+              handleLeaveHub: () {
+                context.go(AppScreens.onBoarding);
+              },
             ),
             SizedBox(height: 10.0),
           ],

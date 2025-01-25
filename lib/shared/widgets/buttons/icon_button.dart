@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class AppIconButton extends StatelessWidget {
   const AppIconButton({
     super.key,
+    this.id,
     required this.icon,
     this.backgroundColor,
     this.borderColor,
@@ -12,6 +13,7 @@ class AppIconButton extends StatelessWidget {
     this.active = false,
   });
 
+  final String? id;
   final bool? active;
   final IconData icon;
   final Color? backgroundColor;
