@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:catfish_mobile/utils/formatters/formate_secondes_to_string.dart';
+import 'package:catfish_mobile/utils/formatters/time/formate_secondes_to_string.dart';
 import 'package:flutter/material.dart';
 
 class TimerText extends StatefulWidget {

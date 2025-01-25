@@ -1,9 +1,15 @@
 import 'package:catfish_mobile/shared/widgets/buttons/icon_button.dart';
 import 'package:catfish_mobile/shared/widgets/buttons/primary_button.dart';
+import 'package:catfish_mobile/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ActionsBar extends StatelessWidget {
-  const ActionsBar({super.key});
+  const ActionsBar({
+    super.key,
+    required this.handleCameraToggle,
+  });
+
+  final void Function() handleCameraToggle;
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +29,16 @@ class ActionsBar extends StatelessWidget {
             ),
             AppIconButton(
               icon: Icons.people,
+              backgroundColor: AppColors.surface,
             ),
             AppIconButton(
               icon: Icons.mic_off_outlined,
+              backgroundColor: AppColors.surface,
             ),
             AppIconButton(
               icon: Icons.videocam_off_sharp,
+              backgroundColor: AppColors.surface,
+              onPress: handleCameraToggle,
             ),
           ],
         ),

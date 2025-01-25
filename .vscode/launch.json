@@ -11,7 +11,7 @@
       "name": "Android realme (debug)",
       "request": "launch",
       "type": "dart",
-      "deviceId": "0H73B01I22100471",
+      "deviceId": "192.168.11.101:5555",
       "program": "lib/main.dart",
       "flutterMode": "debug"
     },
@@ -19,7 +19,7 @@
       "name": "Android realme (profile)",
       "request": "launch",
       "type": "dart",
-      "deviceId": "0H73B01I22100471",
+      "deviceId": "192.168.11.101:5555",
       "program": "lib/main.dart",
       "flutterMode": "profile"
     },
@@ -27,7 +27,7 @@
       "name": "Android realme (release)",
       "request": "launch",
       "type": "dart",
-      "deviceId": "0H73B01I22100471",
+      "deviceId": "192.168.11.101:5555",
       "program": "lib/main.dart",
       "flutterMode": "release"
     },

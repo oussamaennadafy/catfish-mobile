@@ -7,17 +7,20 @@ class AppIconButton extends StatelessWidget {
     required this.icon,
     this.backgroundColor,
     this.borderColor,
+    this.onPress,
   });
 
   final IconData icon;
   final Color? backgroundColor;
   final Color? borderColor;
+  final void Function()? onPress;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 45,
       width: 45,
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: backgroundColor,
         border: Border.all(
@@ -28,7 +31,10 @@ class AppIconButton extends StatelessWidget {
           Radius.circular(8.0),
         ),
       ),
-      child: Ink(
+      child: InkWell(
+        highlightColor: backgroundColor,
+        overlayColor: WidgetStateProperty.all(backgroundColor),
+        onTap: onPress,
         child: Icon(
           icon,
           color: Colors.white70,
