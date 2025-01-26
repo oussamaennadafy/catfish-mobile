@@ -171,11 +171,11 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
 
   void handleSkipButton() async {
     // emit search event depending on room type
-    if (isRoomStarted == false) {
-      setState(() {
-        isRoomStarted = true;
-      });
-    }
+    // if (isRoomStarted == false) {
+    setState(() {
+      isRoomStarted = !isRoomStarted;
+    });
+    // }
   }
 
   @override
@@ -192,12 +192,12 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
         child: Column(
           children: [
             Header(),
-            // CallFrame(),
-            // SizedBox(height: 8.0),
+            SizedBox(height: 8.0),
             CallFrame(
               cameraController: controller,
               loading: camerPreviewLoader,
               cameraOpen: cameraOpen,
+              isCollapsed: isRoomStarted,
             ),
             SizedBox(height: 16.0),
             ActionsBar(
