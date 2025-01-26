@@ -29,6 +29,7 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
   RoomType seletedRoomType = RoomType.twoPeople;
   String? error;
   late List<RoomTypeButton> roomTypeButtons;
+  bool isRoomStarted = false;
 
   Future<void> _initializeCameraController() async {
     setState(() {
@@ -74,8 +75,27 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    // _initializeCameraController();
+    initializeRoomTypeButtons();
+    WidgetsBinding.instance.addObserver(this);
+  }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final CameraController? cameraController = controller;
+
+    // App state changed before we got the chance to initialize.
+    if (cameraController == null || !cameraController.value.isInitialized) {
+      return;
+    }
+
+    if (state == AppLifecycleState.inactive) {
+      cameraController.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      if (cameraOpen) _initializeCameraController();
+    }
+  }
+
+  void initializeRoomTypeButtons() {
     roomTypeButtons = [
       RoomTypeButton(
         roomType: RoomType.fourPeople,
@@ -117,24 +137,6 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
         ),
       ),
     ];
-
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    final CameraController? cameraController = controller;
-
-    // App state changed before we got the chance to initialize.
-    if (cameraController == null || !cameraController.value.isInitialized) {
-      return;
-    }
-
-    if (state == AppLifecycleState.inactive) {
-      cameraController.dispose();
-    } else if (state == AppLifecycleState.resumed) {
-      if (cameraOpen) _initializeCameraController();
-    }
   }
 
   void handleCameraToggle() async {
@@ -167,6 +169,15 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
     });
   }
 
+  void handleSkipButton() async {
+    // emit search event depending on room type
+    if (isRoomStarted == false) {
+      setState(() {
+        isRoomStarted = true;
+      });
+    }
+  }
+
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
@@ -196,6 +207,8 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
               micBottonActive: !micOpen,
               roomTypeButtons: roomTypeButtons,
               selectedRoomType: seletedRoomType,
+              handleSkipButton: handleSkipButton,
+              isRoomStarted: isRoomStarted,
               handleLeaveHub: () {
                 context.go(AppScreens.onBoarding);
               },

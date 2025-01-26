@@ -16,6 +16,8 @@ class ActionsBar extends StatelessWidget {
     required this.handleLeaveHub,
     required this.roomTypeButtons,
     required this.selectedRoomType,
+    required this.handleSkipButton,
+    required this.isRoomStarted,
   });
 
   final bool cameraBottonActive;
@@ -23,8 +25,10 @@ class ActionsBar extends StatelessWidget {
   final void Function() handleCameraToggle;
   final void Function() handleMicToggle;
   final void Function() handleLeaveHub;
+  final void Function() handleSkipButton;
   final List<RoomTypeButton> roomTypeButtons;
   final RoomType selectedRoomType;
+  final bool isRoomStarted;
 
   @override
   Widget build(BuildContext context) {
@@ -66,17 +70,10 @@ class ActionsBar extends StatelessWidget {
         SizedBox(width: 6.0),
         Expanded(
           child: PrimaryButton(
-            text: "Switch User",
-            icon: Icons.shuffle_rounded,
-            onPress: () {
-              final width = MediaQuery.of(context).size.width;
-              final height = MediaQuery.of(context).size.height;
-              print({
-                "width": width.toString(),
-                "height": height.toString(),
-                "aspectRatio": width / height,
-              });
-            },
+            text: isRoomStarted ? "Switch User" : "Start call",
+            icon: isRoomStarted ? Icons.shuffle_rounded : Icons.east,
+            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+            onPress: handleSkipButton,
           ),
         ),
       ],

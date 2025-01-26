@@ -1,6 +1,5 @@
 import 'package:catfish_mobile/features/callHub/enums/room_types.dart';
 import 'package:catfish_mobile/features/callHub/models/room_type_button.dart';
-import 'package:catfish_mobile/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class IconBottonDropdown extends StatefulWidget {
@@ -66,7 +65,6 @@ class _IconBottonDropdownState extends State<IconBottonDropdown> with SingleTick
             child: Align(
               alignment: Alignment.bottomLeft,
               child: AnimatedBuilder(
-                // animation: animationController,
                 animation: CurvedAnimation(
                   parent: animationController,
                   curve: Curves.easeOut,

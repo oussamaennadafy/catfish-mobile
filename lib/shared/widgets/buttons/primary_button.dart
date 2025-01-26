@@ -7,12 +7,14 @@ class PrimaryButton extends StatelessWidget {
     this.icon,
     this.onPress,
     this.height,
+    this.padding,
   });
 
   final String text;
   final IconData? icon;
   final void Function()? onPress;
   final double? height;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class PrimaryButton extends StatelessWidget {
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
+        padding: padding ?? EdgeInsets.symmetric(vertical: 10.0, horizontal: 18.0),
         height: height ?? 45,
         decoration: BoxDecoration(
           gradient: RadialGradient(
