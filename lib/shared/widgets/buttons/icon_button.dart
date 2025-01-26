@@ -21,6 +21,27 @@ class AppIconButton extends StatelessWidget {
   final Color? borderColor;
   final void Function()? onPress;
 
+  // IMPORTANT: update it each time you modify the class
+  AppIconButton copyWith({
+    String? id,
+    bool? active,
+    IconData? icon,
+    Color? backgroundColor,
+    Color? activeBackgroundColor,
+    Color? borderColor,
+    void Function()? onPress,
+  }) {
+    return AppIconButton(
+      id: id ?? this.id,
+      active: active ?? this.active,
+      icon: icon ?? this.icon,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      activeBackgroundColor: activeBackgroundColor ?? this.activeBackgroundColor,
+      borderColor: borderColor ?? this.borderColor,
+      onPress: onPress ?? this.onPress,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

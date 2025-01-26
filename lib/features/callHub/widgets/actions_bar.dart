@@ -45,7 +45,7 @@ class ActionsBar extends StatelessWidget {
             ),
             IconBottonDropdown(
               buttonsList: roomTypeButtons,
-              selectedButton: selectedRoomType,
+              selectedButtonType: selectedRoomType,
             ),
             AppIconButton(
               icon: Icons.mic_off_outlined,

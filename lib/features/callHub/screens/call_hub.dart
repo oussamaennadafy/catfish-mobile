@@ -9,6 +9,7 @@ import 'package:catfish_mobile/routes/constants/app_screens.dart';
 import 'package:catfish_mobile/shared/widgets/buttons/icon_button.dart';
 import 'package:catfish_mobile/shared/widgets/buttons/primary_button.dart';
 import 'package:catfish_mobile/shared/widgets/cards/call_frame.dart';
+import 'package:catfish_mobile/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -27,6 +28,7 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
   bool micOpen = false;
   RoomType seletedRoomType = RoomType.twoPeople;
   String? error;
+  late List<RoomTypeButton> roomTypeButtons;
 
   Future<void> _initializeCameraController() async {
     setState(() {
@@ -73,6 +75,49 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     // _initializeCameraController();
+
+    roomTypeButtons = [
+      RoomTypeButton(
+        roomType: RoomType.fourPeople,
+        typeButton: AppIconButton(
+          icon: Icons.groups,
+          backgroundColor: AppColors.surfaceVarient,
+          activeBackgroundColor: AppColors.lightSurface,
+          onPress: () {
+            setState(() {
+              seletedRoomType = RoomType.fourPeople;
+            });
+          },
+        ),
+      ),
+      RoomTypeButton(
+        roomType: RoomType.threePeople,
+        typeButton: AppIconButton(
+          icon: Icons.group,
+          backgroundColor: AppColors.surfaceVarient,
+          activeBackgroundColor: AppColors.lightSurface,
+          onPress: () {
+            setState(() {
+              seletedRoomType = RoomType.threePeople;
+            });
+          },
+        ),
+      ),
+      RoomTypeButton(
+        roomType: RoomType.twoPeople,
+        typeButton: AppIconButton(
+          icon: Icons.person,
+          backgroundColor: AppColors.surfaceVarient,
+          activeBackgroundColor: AppColors.lightSurface,
+          onPress: () {
+            setState(() {
+              seletedRoomType = RoomType.twoPeople;
+            });
+          },
+        ),
+      ),
+    ];
+
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -122,27 +167,6 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
     });
   }
 
-  final List<RoomTypeButton> roomTypeButtons = [
-    RoomTypeButton(
-      roomType: RoomType.twoPeople,
-      typeButton: AppIconButton(
-        icon: Icons.person,
-      ),
-    ),
-    RoomTypeButton(
-      roomType: RoomType.threePeople,
-      typeButton: AppIconButton(
-        icon: Icons.group,
-      ),
-    ),
-    RoomTypeButton(
-      roomType: RoomType.fourPeople,
-      typeButton: AppIconButton(
-        icon: Icons.groups,
-      ),
-    ),
-  ];
-
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
@@ -176,7 +200,7 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
                 context.go(AppScreens.onBoarding);
               },
             ),
-            SizedBox(height: 10.0),
+            // SizedBox(height: 10.0),
           ],
         ),
       ),
