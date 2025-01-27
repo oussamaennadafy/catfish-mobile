@@ -45,14 +45,14 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
         throw CameraErrors.noCameraFound;
       }
 
-      controller = CameraController(camerasList[1], ResolutionPreset.ultraHigh, enableAudio: true);
+      controller = CameraController(camerasList[1], ResolutionPreset.high, enableAudio: true);
 
       // initialize camera
       await controller!.initialize();
 
       if (controller != null) {
         final isInitialized = controller!.value.isInitialized;
-        if (isInitialized && cameraOpen && !camerPreviewLoader) cameraAspectRatio ??= controller!.value.aspectRatio;
+        if (isInitialized) cameraAspectRatio ??= controller!.value.aspectRatio;
       }
     } catch (e) {
       if (!mounted) return;

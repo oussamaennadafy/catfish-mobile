@@ -22,6 +22,9 @@ class CallFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print({
+      "cameraAspectRatio": cameraAspectRatio
+    });
     final showCameraPreview = cameraController != null && cameraController!.value.isInitialized && cameraOpen == true;
     Widget? content = Stack(
       alignment: Alignment.center,
@@ -29,7 +32,7 @@ class CallFrame extends StatelessWidget {
         IllustrationShadow(
           alpha: 0.2,
           size: isCollapsed == true ? 50 : 150,
-          blurRadius: isCollapsed ? 10 : 80,
+          blurRadius: isCollapsed ? 20 : 80,
         ),
         NameAvatar(
           size: isCollapsed == true ? NameAvatarSize.small : NameAvatarSize.large,
