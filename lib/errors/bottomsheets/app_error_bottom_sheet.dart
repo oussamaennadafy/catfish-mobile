@@ -45,12 +45,14 @@ class AppErrorBottomSheet extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Stack(
             children: [
-              IllustrationShadow(),
+              IllustrationShadow(
+                size: primaryButton == null ? 150 : 120,
+              ),
               SvgPicture.asset(
                 AppIllustrations.errorIllustration,
                 // height: 100,
                 alignment: Alignment.center,
-                width: 150,
+                width: primaryButton == null ? 150 : 120,
               ),
             ],
           ),
@@ -67,7 +69,7 @@ class AppErrorBottomSheet extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 18.0),
+        SizedBox(height: 12.0),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Text(
@@ -79,7 +81,12 @@ class AppErrorBottomSheet extends StatelessWidget {
             ),
           ),
         ),
-        if (primaryButton != null) primaryButton!,
+        Spacer(),
+        if (primaryButton != null)
+          primaryButton!.copyWith(
+            margin: EdgeInsets.symmetric(horizontal: 24.0),
+          ),
+        Spacer(),
         // SizedBox(height: 24),
       ],
     );

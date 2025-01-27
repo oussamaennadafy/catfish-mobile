@@ -8,6 +8,7 @@ class PrimaryButton extends StatelessWidget {
     this.onPress,
     this.height,
     this.padding,
+    this.margin,
   });
 
   final String text;
@@ -15,6 +16,26 @@ class PrimaryButton extends StatelessWidget {
   final void Function()? onPress;
   final double? height;
   final EdgeInsets? padding;
+  final EdgeInsets? margin;
+
+  // IMPORTANT: update it each time you modify the class
+  PrimaryButton copyWith({
+    final String? text,
+    final IconData? icon,
+    final void Function()? onPress,
+    final double? height,
+    final EdgeInsets? padding,
+    final EdgeInsets? margin,
+  }) {
+    return PrimaryButton(
+      text: text ?? this.text,
+      height: height ?? this.height,
+      icon: icon ?? this.icon,
+      onPress: onPress ?? this.onPress,
+      padding: padding ?? this.padding,
+      margin: margin ?? this.margin,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +45,7 @@ class PrimaryButton extends StatelessWidget {
       splashColor: Colors.transparent,
       child: Container(
         padding: padding ?? EdgeInsets.symmetric(vertical: 10.0, horizontal: 18.0),
+        margin: margin,
         height: height ?? 45,
         decoration: BoxDecoration(
           gradient: RadialGradient(
