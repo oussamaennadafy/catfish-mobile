@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:catfish_mobile/constants/sizes.dart';
 import 'package:catfish_mobile/shared/widgets/avatars/name_avatar.dart';
 import 'package:catfish_mobile/shared/widgets/shadows/illustration_shadow.dart';
 import 'package:catfish_mobile/theme/app_colors.dart';
@@ -22,9 +23,6 @@ class CallFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print({
-      "cameraAspectRatio": cameraAspectRatio
-    });
     final showCameraPreview = cameraController != null && cameraController!.value.isInitialized && cameraOpen == true;
     Widget? content = Stack(
       alignment: Alignment.center,
@@ -55,8 +53,8 @@ class CallFrame extends StatelessWidget {
               top: isCollapsed == true ? 0 : null,
               right: isCollapsed == true ? 0 : null,
               child: SizedBox(
-                height: isCollapsed == true ? (cameraAspectRatio != null ? 80 * cameraAspectRatio!.toDouble() : (80 * 1.7)) : null,
-                width: isCollapsed == true ? 80 : null,
+                height: isCollapsed == true ? (cameraAspectRatio != null ? COLLAPSED_CALL_PREVIEW_WIDTH * cameraAspectRatio!.toDouble() : (COLLAPSED_CALL_PREVIEW_WIDTH * 1.7)) : null,
+                width: isCollapsed == true ? COLLAPSED_CALL_PREVIEW_WIDTH : null,
                 child: Container(
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
@@ -73,13 +71,12 @@ class CallFrame extends StatelessWidget {
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(12),
+                        Radius.circular(12.0),
                       ),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: showCameraPreview == true ? MainAxisSize.min : MainAxisSize.max,
-                      // crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         content,
                       ],

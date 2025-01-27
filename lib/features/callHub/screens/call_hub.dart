@@ -8,7 +8,7 @@ import 'package:catfish_mobile/features/callHub/widgets/header/index.dart';
 import 'package:catfish_mobile/routes/constants/app_screens.dart';
 import 'package:catfish_mobile/shared/widgets/buttons/icon_button.dart';
 import 'package:catfish_mobile/shared/widgets/buttons/primary_button.dart';
-import 'package:catfish_mobile/shared/widgets/cards/call_frame.dart';
+import 'package:catfish_mobile/shared/widgets/cards/call_frame/index.dart';
 import 'package:catfish_mobile/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
