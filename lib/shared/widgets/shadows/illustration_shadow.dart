@@ -4,20 +4,24 @@ class IllustrationShadow extends StatelessWidget {
   const IllustrationShadow({
     super.key,
     this.alpha,
+    this.size,
+    this.blurRadius,
   });
 
   final double? alpha;
+  final double? size;
+  final double? blurRadius;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150,
-      height: 150,
+      width: size ?? 150,
+      height: size ?? 150,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
             color: Colors.white.withValues(alpha: alpha ?? 0.1),
-            blurRadius: 80,
+            blurRadius: blurRadius ?? 80,
           )
         ],
         borderRadius: BorderRadius.all(

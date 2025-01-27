@@ -30,6 +30,7 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
   String? error;
   late List<RoomTypeButton> roomTypeButtons;
   bool isRoomStarted = false;
+  double? cameraAspectRatio;
 
   Future<void> _initializeCameraController() async {
     setState(() {
@@ -48,6 +49,11 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
 
       // initialize camera
       await controller!.initialize();
+
+      if (controller != null) {
+        final isInitialized = controller!.value.isInitialized;
+        if (isInitialized && cameraOpen && !camerPreviewLoader) cameraAspectRatio ??= controller!.value.aspectRatio;
+      }
     } catch (e) {
       if (!mounted) return;
       if (e is CameraException && e.code == "CameraAccessDenied") {
@@ -198,6 +204,7 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
               loading: camerPreviewLoader,
               cameraOpen: cameraOpen,
               isCollapsed: isRoomStarted,
+              cameraAspectRatio: cameraAspectRatio,
             ),
             SizedBox(height: 16.0),
             ActionsBar(

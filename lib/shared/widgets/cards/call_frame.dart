@@ -11,12 +11,14 @@ class CallFrame extends StatelessWidget {
     this.loading,
     this.cameraOpen = true,
     required this.isCollapsed,
+    this.cameraAspectRatio,
   });
 
   final CameraController? cameraController;
   final bool? loading;
   final bool? cameraOpen;
   final bool isCollapsed;
+  final double? cameraAspectRatio;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,11 @@ class CallFrame extends StatelessWidget {
     Widget? content = Stack(
       alignment: Alignment.center,
       children: [
-        IllustrationShadow(alpha: 0.2),
+        IllustrationShadow(
+          alpha: 0.2,
+          size: isCollapsed == true ? 50 : 150,
+          blurRadius: isCollapsed ? 10 : 80,
+        ),
         NameAvatar(
           size: isCollapsed == true ? NameAvatarSize.small : NameAvatarSize.large,
         ),
@@ -33,10 +39,6 @@ class CallFrame extends StatelessWidget {
     if (loading == true) {
       content = Center(child: SizedBox(height: isCollapsed == true ? 10 : null, width: isCollapsed == true ? 10 : null, child: CircularProgressIndicator(strokeWidth: isCollapsed == true ? 1.0 : 4.0)));
     } else if (cameraController != null && cameraOpen == true) {
-      print({
-        "cameraController.value.aspectRatio ------------------------------------------------": cameraController!.value.aspectRatio,
-        "MediaQuery.of(context).devicePixelRatio ------------------------------------------------": MediaQuery.of(context).devicePixelRatio,
-      });
       content = CameraPreview(
         cameraController!,
       );
@@ -50,7 +52,7 @@ class CallFrame extends StatelessWidget {
               top: isCollapsed == true ? 0 : null,
               right: isCollapsed == true ? 0 : null,
               child: SizedBox(
-                height: isCollapsed == true ? (content is CameraPreview ? (80 * cameraController!.value.aspectRatio) : (80 * MediaQuery.of(context).devicePixelRatio)) : null,
+                height: isCollapsed == true ? (cameraAspectRatio != null ? 80 * cameraAspectRatio!.toDouble() : (80 * 1.7)) : null,
                 width: isCollapsed == true ? 80 : null,
                 child: Container(
                   clipBehavior: Clip.hardEdge,
