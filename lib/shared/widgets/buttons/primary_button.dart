@@ -9,6 +9,7 @@ class PrimaryButton extends StatelessWidget {
     this.height,
     this.padding,
     this.margin,
+    this.hasGradient = true,
   });
 
   final String text;
@@ -17,6 +18,7 @@ class PrimaryButton extends StatelessWidget {
   final double? height;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
+  final bool? hasGradient;
 
   // IMPORTANT: update it each time you modify the class
   PrimaryButton copyWith({
@@ -26,6 +28,7 @@ class PrimaryButton extends StatelessWidget {
     final double? height,
     final EdgeInsets? padding,
     final EdgeInsets? margin,
+    final bool? hasGradient,
   }) {
     return PrimaryButton(
       text: text ?? this.text,
@@ -34,6 +37,7 @@ class PrimaryButton extends StatelessWidget {
       onPress: onPress ?? this.onPress,
       padding: padding ?? this.padding,
       margin: margin ?? this.margin,
+      hasGradient: hasGradient ?? this.hasGradient,
     );
   }
 
@@ -48,14 +52,17 @@ class PrimaryButton extends StatelessWidget {
         margin: margin,
         height: height ?? 45,
         decoration: BoxDecoration(
-          gradient: RadialGradient(
-            center: Alignment(-0.3, -1),
-            radius: 1,
-            colors: [
-              Color.fromARGB(255, 120, 111, 239),
-              Color(0xFF4139B0),
-            ],
-          ),
+          gradient: hasGradient == true
+              ? RadialGradient(
+                  center: Alignment(-0.3, -1),
+                  radius: 1,
+                  colors: [
+                    Color.fromARGB(255, 101, 93, 214),
+                    Color(0xFF4139B0),
+                  ],
+                )
+              : null,
+          color: Color(0xFF4139B0),
           borderRadius: BorderRadius.all(
             Radius.circular(9999),
           ),

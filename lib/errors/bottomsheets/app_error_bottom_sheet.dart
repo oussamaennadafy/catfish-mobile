@@ -85,6 +85,7 @@ class AppErrorBottomSheet extends StatelessWidget {
         if (primaryButton != null)
           primaryButton!.copyWith(
             margin: EdgeInsets.symmetric(horizontal: 24.0),
+            hasGradient: false,
           ),
         Spacer(),
         // SizedBox(height: 24),
