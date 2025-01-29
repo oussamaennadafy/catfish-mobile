@@ -5,7 +5,6 @@ import 'package:catfish_mobile/constants/sizes.dart';
 import 'package:catfish_mobile/shared/widgets/avatars/name_avatar.dart';
 import 'package:catfish_mobile/shared/widgets/shadows/illustration_shadow.dart';
 import 'package:catfish_mobile/theme/app_colors.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CallFrame extends StatefulWidget {
@@ -16,6 +15,8 @@ class CallFrame extends StatefulWidget {
     this.cameraOpen = true,
     required this.isCollapsed,
     this.cameraAspectRatio,
+    required this.frameHeight,
+    required this.frameWidth,
   });
 
   final CameraController? cameraController;
@@ -23,6 +24,8 @@ class CallFrame extends StatefulWidget {
   final bool? cameraOpen;
   final bool isCollapsed;
   final double? cameraAspectRatio;
+  final double frameHeight;
+  final double frameWidth;
 
   @override
   State<CallFrame> createState() => _CallFrameState();
@@ -32,31 +35,32 @@ class _CallFrameState extends State<CallFrame> with TickerProviderStateMixin {
   late AnimationController traslateXanimationController;
   late AnimationController traslateYanimationController;
 
+  late double collapsedFrameHeigth;
+
   @override
   void initState() {
     FlutterView view = WidgetsBinding.instance.platformDispatcher.views.first;
     Size size = view.physicalSize / view.devicePixelRatio;
+    collapsedFrameHeigth = (COLLAPSED_CALL_PREVIEW_WIDTH * (widget.cameraAspectRatio != null ? widget.cameraAspectRatio! : 1.7));
     traslateXanimationController = AnimationController(
       vsync: this,
       lowerBound: 0,
       upperBound: size.width - (12 * 2) - (10 * 2) - (COLLAPSED_CALL_PREVIEW_WIDTH + 1),
       value: 0,
+      duration: Duration(milliseconds: 1000),
     );
     traslateYanimationController = AnimationController(
       vsync: this,
       lowerBound: 0,
-      upperBound: size.height,
+      upperBound: widget.frameHeight - collapsedFrameHeigth - 20,
       value: 0,
+      duration: Duration(milliseconds: 1000),
     );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print({
-      "MediaQuery.of(context).size.height": MediaQuery.of(context).size.height,
-      "MediaQuery.of(context).size.width": MediaQuery.of(context).size.width,
-    });
     final showCameraPreview = widget.cameraController != null && widget.cameraController!.value.isInitialized && widget.cameraOpen == true;
     Widget? content = Stack(
       alignment: Alignment.center,
@@ -80,10 +84,30 @@ class _CallFrameState extends State<CallFrame> with TickerProviderStateMixin {
     }
     return Center(
       child: GestureDetector(
+        onTap: () {},
         onPanUpdate: (details) {
           if (widget.isCollapsed) {
             traslateXanimationController.value -= details.delta.dx;
             traslateYanimationController.value += details.delta.dy;
+          }
+        },
+        onPanEnd: (details) {
+          double traslateXOfCenterOfCollapsed = traslateXanimationController.value + 10 + (COLLAPSED_CALL_PREVIEW_WIDTH / 2);
+          double traslateYOfCenterOfCollapsed = traslateYanimationController.value + 10 + collapsedFrameHeigth / 2;
+          double xCenter = widget.frameWidth / 2;
+          double yCenter = widget.frameHeight / 2;
+          if (xCenter >= traslateXOfCenterOfCollapsed && yCenter >= traslateYOfCenterOfCollapsed) {
+            traslateXanimationController.animateTo(0);
+            traslateYanimationController.animateTo(0);
+          } else if (xCenter < traslateXOfCenterOfCollapsed && yCenter >= traslateYOfCenterOfCollapsed) {
+            traslateXanimationController.forward();
+            traslateYanimationController.animateTo(0);
+          } else if (xCenter > traslateXOfCenterOfCollapsed && yCenter < traslateYOfCenterOfCollapsed) {
+            traslateXanimationController.animateTo(0);
+            traslateYanimationController.forward();
+          } else if (xCenter < traslateXOfCenterOfCollapsed && yCenter < traslateYOfCenterOfCollapsed) {
+            traslateXanimationController.forward();
+            traslateYanimationController.forward();
           }
         },
         child: AnimatedBuilder(

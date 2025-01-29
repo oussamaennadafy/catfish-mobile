@@ -200,21 +200,29 @@ class _CallHubState extends State<CallHub> with WidgetsBindingObserver {
             Header(),
             SizedBox(height: 8.0),
             Expanded(
-              child: Stack(
-                children: [
-                  if (isRoomStarted)
-                    CallFrame(
-                      isCollapsed: false,
-                      loading: true,
-                    ),
-                  CallFrame(
-                    cameraController: controller,
-                    loading: camerPreviewLoader,
-                    cameraOpen: cameraOpen,
-                    isCollapsed: isRoomStarted,
-                    cameraAspectRatio: cameraAspectRatio,
-                  ),
-                ],
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return Stack(
+                    children: [
+                      if (isRoomStarted)
+                        CallFrame(
+                          isCollapsed: false,
+                          loading: true,
+                          frameHeight: constraints.maxHeight,
+                          frameWidth: constraints.maxWidth,
+                        ),
+                      CallFrame(
+                        cameraController: controller,
+                        loading: camerPreviewLoader,
+                        cameraOpen: cameraOpen,
+                        isCollapsed: isRoomStarted,
+                        cameraAspectRatio: cameraAspectRatio,
+                        frameHeight: constraints.maxHeight,
+                        frameWidth: constraints.maxWidth,
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
             SizedBox(height: 16.0),

@@ -56,9 +56,8 @@ class _OnBoardingStateScreen extends State<OnBoardingScreen> with SingleTickerPr
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18),
         child: Column(
-          spacing: 24.0,
           children: [
-            Spacer(),
+            Spacer(flex: 4),
             Center(
               child: Text(
                 "Get Started",
@@ -70,6 +69,7 @@ class _OnBoardingStateScreen extends State<OnBoardingScreen> with SingleTickerPr
                 textAlign: TextAlign.center,
               ),
             ),
+            Spacer(),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               clipBehavior: Clip.hardEdge,
@@ -97,7 +97,7 @@ class _OnBoardingStateScreen extends State<OnBoardingScreen> with SingleTickerPr
               selectedDot: _selectedDot,
             ),
             Spacer(
-              flex: 2,
+              flex: 8,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,7 +113,7 @@ class _OnBoardingStateScreen extends State<OnBoardingScreen> with SingleTickerPr
                 )
               ],
             ),
-            SizedBox(height: 18),
+            Spacer(),
           ],
         ),
       ),

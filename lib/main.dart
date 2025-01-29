@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routerConfig: GoRouter(
-        initialLocation: AppScreens.callHub,
+        initialLocation: AppScreens.onBoarding,
         routes: [
           ShellRoute(
             builder: (BuildContext context, GoRouterState state, Widget child) => AppLayout(
