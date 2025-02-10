@@ -1,4 +1,4 @@
-import 'package:catfish_mobile/errors/bottomsheets/app_error_bottom_sheet.dart';
+import 'package:catfish_mobile/errors/ui/bottomsheets/app_error_bottom_sheet.dart';
 import 'package:catfish_mobile/shared/widgets/bottomsheets/show_app_modal_bottom_sheet.dart';
 import 'package:catfish_mobile/shared/widgets/buttons/primary_button.dart';
 import 'package:flutter/material.dart';
